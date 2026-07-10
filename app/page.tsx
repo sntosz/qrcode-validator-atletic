@@ -1,6 +1,6 @@
 'use client';
-import Header from "./components/header";
-import BottomNavigationBar from "./components/BottomNavigationBar";
+import Header from "../components/header";
+import BottomNavigationBar from "../components/BottomNavigationBar";
 import { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 
@@ -16,6 +16,7 @@ export default function Home() {
   const [studentData, setStudentData] = useState<StudentData | null>(null);
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
+  const isScannerRunningRef = useRef<boolean>(false);
 
   const parseQRData = (rawData: string): StudentData | null => {
     try {
@@ -45,10 +46,11 @@ export default function Home() {
     const parsed = parseQRData(decodedText);
     setStudentData(parsed);
 
-    if (scannerRef.current) {
+    if (scannerRef.current && isScannerRunningRef.current) {
       scannerRef.current.stop().catch(() => {
         // não faz nada se falhar
       });
+      isScannerRunningRef.current = false;
     }
   };
 
@@ -59,7 +61,7 @@ export default function Home() {
 
   // Inicia a câmera traseira automaticamente
   const startScanner = async () => {
-    if (!scannerRef.current) {
+    if (!scannerRef.current || isScannerRunningRef.current) {
       return;
     }
 
@@ -74,8 +76,10 @@ export default function Home() {
         onScanSuccess,
         onScanError
       );
+      isScannerRunningRef.current = true;
     } catch (error) {
       console.warn('Erro ao iniciar câmera traseira:', error);
+      isScannerRunningRef.current = false;
     }
   };
 
@@ -97,13 +101,16 @@ export default function Home() {
     startScanner();
 
     return () => {
-
-      if (scannerRef.current) {
+      if (scannerRef.current && isScannerRunningRef.current) {
         scannerRef.current
           .stop()
-          .then(() => scannerRef.current?.clear())
+          .then(() => {
+            scannerRef.current?.clear();
+            isScannerRunningRef.current = false;
+          })
           .catch(() => {
             scannerRef.current?.clear();
+            isScannerRunningRef.current = false;
           });
       }
     };
@@ -111,7 +118,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-[100vh]">
       <Header />
-      <main className="flex flex-col items-center justify-center bg-black text-white px-6 py-10">
+      <main className="flex flex-col items-center justify-center  text-white px-6 py-10">
         <h1 className="text-3xl font-bold text-center mb-3">Validação de Sócios</h1>
         <p className="text-center text-gray-400 text-sm mb-10 leading-relaxed">
           Escaneie o QR Code da carteirinha para conferir a<br />situação do sócio.
