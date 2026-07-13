@@ -28,7 +28,7 @@ export function LoginForm() {
       setError(res.erro || "Erro ao efetuar o Login")
       setLoading(false)
     } else {
-      router.push("/dashboard")
+      router.push("/admin/dashboard")
     }
   }
 
