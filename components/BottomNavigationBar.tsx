@@ -16,8 +16,8 @@ export default function BottomNavigationBar() {
                 <ScanLine className="w-5 h-5" />
                 <span className="mt-0.5">Scanner</span>
             </Link>
-            <Link className={pathname === '/admin' ? `${styleStandart} opacity-100` : `${styleStandart}`}
-                href="/admin">
+            <Link className={pathname === '/login' ? `${styleStandart} opacity-100` : `${styleStandart}`}
+                href="/login">
                 <ShieldUser className="w-5 h-5" />
                 <span className="mt-0.5">Admin</span>
             </Link>

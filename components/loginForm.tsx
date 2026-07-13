@@ -1,12 +1,13 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff, Lock, ArrowRight, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { LoginAdmin } from "@/actions/admin"
 
 export function LoginForm() {
   const router = useRouter()
@@ -16,38 +17,24 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     setLoading(true)
 
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      })
+    const res = await LoginAdmin(username, password)
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        setError(body?.message || "Falha ao autenticar")
-        return
-      }
-
-      // success
-      router.push("/")
-    } catch (err) {
-      console.error(err)
-      setError("Erro de rede")
-    } finally {
+    if (!res.sucesso) {
+      setError(res.erro || "Erro ao efetuar o Login")
       setLoading(false)
+    } else {
+      router.push("/dashboard")
     }
   }
 
   return (
     <div className="w-full max-w-md">
       <div className="rounded-3xl border border-gray-800/60 bg-[rgba(8,18,12,0.65)] p-8 shadow-2xl shadow-black/40 backdrop-blur-md">
-        {/* Lock badge */}
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(37,80,51,0.95)] ring-1 ring-white/8">
           <Lock className="h-7 w-7 text-white" aria-hidden="true" />
         </div>
@@ -71,15 +58,15 @@ export function LoginForm() {
                 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
                 aria-hidden="true"
               />
-                <Input
-                  id="username"
-                  type="text"
-                  autoComplete="username"
-                  placeholder="Digite seu usuário ou e-mail"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="h-12 rounded-lg bg-[rgba(255,255,255,0.02)] pl-10 pr-3 text-white placeholder:text-gray-500 border border-transparent focus:border-[rgba(255,255,255,0.06)]"
-                />
+              <Input
+                id="username"
+                type="text"
+                autoComplete="username"
+                placeholder="Digite seu usuário ou e-mail"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="h-12 rounded-lg bg-[rgba(255,255,255,0.02)] pl-10 pr-3 text-white placeholder:text-gray-500 border border-transparent focus:border-[rgba(255,255,255,0.06)]"
+              />
             </div>
           </div>
 

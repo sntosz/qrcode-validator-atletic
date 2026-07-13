@@ -48,18 +48,14 @@ export default function Home() {
 
     if (scannerRef.current && isScannerRunningRef.current) {
       scannerRef.current.stop().catch(() => {
-        // não faz nada se falhar
       });
       isScannerRunningRef.current = false;
     }
   };
 
-  // Callback quando a leitura falha em um frame (não é crítico)
   const onScanError = () => {
-    // Nenhuma ação necessária, o scanner continua tentando
   };
 
-  // Inicia a câmera traseira automaticamente
   const startScanner = async () => {
     if (!scannerRef.current || isScannerRunningRef.current) {
       return;
@@ -83,12 +79,10 @@ export default function Home() {
     }
   };
 
-  // Função para reescanear - limpa resultado E reinicia a câmera
   const handleRescan = async () => {
     setQrResult(null);
     setStudentData(null);
-    
-    // Aguarda um pouco para garantir que o estado foi atualizado
+
     setTimeout(() => {
       startScanner();
     }, 100);
@@ -146,27 +140,27 @@ export default function Home() {
           <div className="w-full max-w-md">
             <div className="rounded-3xl border border-green-500/50 bg-green-900/30 p-6">
               <h2 className="text-2xl font-bold text-green-300 mb-6 text-center">✓ Sócio Validado!</h2>
-              
+
               <div className="mb-4">
                 <p className="text-xs text-gray-400 uppercase tracking-wide">RGM</p>
                 <p className="text-lg font-semibold text-green-200 bg-black/50 p-3 rounded-lg border border-green-500/30">{studentData.rgm}</p>
               </div>
-              
+
               <div className="mb-4">
                 <p className="text-xs text-gray-400 uppercase tracking-wide">Nome</p>
                 <p className="text-lg font-semibold text-green-200 bg-black/50 p-3 rounded-lg border border-green-500/30">{studentData.name}</p>
               </div>
-              
+
               <div className="mb-4">
                 <p className="text-xs text-gray-400 uppercase tracking-wide">Curso</p>
                 <p className="text-lg font-semibold text-green-200 bg-black/50 p-3 rounded-lg border border-green-500/30">{studentData.course}</p>
               </div>
-              
+
               <div className="mb-6">
                 <p className="text-xs text-gray-400 uppercase tracking-wide">Situação</p>
                 <p className={`text-lg font-semibold p-3 rounded-lg border ${studentData.status.toLowerCase() === 'ativo' ? 'text-green-200 bg-green-900/50 border-green-500/50' : 'text-red-200 bg-red-900/50 border-red-500/50'}`}>{studentData.status}</p>
               </div>
-              
+
               <button onClick={handleRescan} className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition-colors">
                 Escanear Outro QR Code
               </button>
