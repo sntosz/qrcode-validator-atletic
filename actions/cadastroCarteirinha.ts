@@ -8,6 +8,9 @@ export async function CadastrarCarteirinha(data: CarteirinhaData): Promise<Actio
         if (!data.name || !data.rgm || !data.course) {
             return { sucesso: false, erro: 'Todos os campos são obrigatórios' };
         }
+
+        const statusValue = data.status === 'inativo' ? 'inativo' : 'ativo';
+
         const {error} = await supabase
         .from('carteirinhas')
         .insert([
@@ -15,7 +18,7 @@ export async function CadastrarCarteirinha(data: CarteirinhaData): Promise<Actio
                 rgm: data.rgm.trim(),
                 name: data.name.trim(),
                 course: data.course.trim(),
-                status: 'ativo'
+                status: statusValue
             }
         ])
         if (error){

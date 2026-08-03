@@ -8,7 +8,7 @@ export interface CarteirinhaData {
   name: string
   rgm: string
   course: string
-  status: string
+  status: 'ativo' | 'inativo'
 }
 
 export function CarteirinhaCard({ data }: { data: CarteirinhaData }) {
@@ -16,10 +16,12 @@ export function CarteirinhaCard({ data }: { data: CarteirinhaData }) {
   const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState(data.name)
   const [course, setCourse] = useState(data.course)
+  const [status, setStatus] = useState<'ativo' | 'inativo'>(data.status)
 
   useEffect(() => {
     setName(data.name)
     setCourse(data.course)
+    setStatus(data.status)
   }, [data])
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export function CarteirinhaCard({ data }: { data: CarteirinhaData }) {
     const res = await EditCarteirinha(data.rgm, {
       name,
       course,
+      status,
     })
 
     if (res.sucesso) {
@@ -126,6 +129,18 @@ export function CarteirinhaCard({ data }: { data: CarteirinhaData }) {
               onChange={(e) => setCourse(e.target.value)}
               className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
             />
+          </div>
+
+          <div>
+            <label className="text-xs uppercase tracking-[0.25em] text-gray-400">Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as 'ativo' | 'inativo')}
+              className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+            >
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
           </div>
 
           <div className="mt-4 flex gap-3">

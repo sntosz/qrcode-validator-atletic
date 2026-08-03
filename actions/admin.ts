@@ -72,19 +72,21 @@ export async function logoutAdmin(): Promise<void> {
 
 export async function EditCarteirinha(
   rgm: string,
-  data: CarteirinhaData
+  data: { name: string; course: string; status?: "ativo" | "inativo" }
 ): Promise<ActionResponse> {
   try {
-    if (!data.name || !data.rgm || !data.course) {
-      return { sucesso: false, erro: 'Todos os campos são obrigatórios' }
+    if (!data.name || !data.course) {
+      return { sucesso: false, erro: 'Nome e curso são obrigatórios' }
     }
+
+    const statusValue = data.status === 'inativo' ? 'inativo' : 'ativo'
 
     const { error } = await supabase
       .from('carteirinhas')
       .update({
         name: data.name.trim(),
-        rgm: data.rgm.trim(),
-        course: data.course.trim()
+        course: data.course.trim(),
+        status: statusValue
       })
       .eq('rgm', rgm.trim())
 
