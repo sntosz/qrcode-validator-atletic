@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { AdminPayload } from "@/types/admin";
-import type {CarteirinhaInput} from "@/types/carteirinha";
+import type {CarteirinhaData} from "@/types/carteirinha";
 
 const secretKey = process.env.JWT_SECRET;
 
@@ -72,7 +72,7 @@ export async function logoutAdmin(): Promise<void> {
 
 export async function EditCarteirinha(
   rgm: string,
-  data: CarteirinhaInput
+  data: CarteirinhaData
 ): Promise<ActionResponse> {
   try {
     if (!data.name || !data.rgm || !data.course) {

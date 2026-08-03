@@ -1,9 +1,9 @@
 'use server'
 
 import { supabase } from "@/app/utils/supabase";
-import type { CarteirinhaInput, ActionResponse } from "@/types/carteirinha";
+import type { CarteirinhaData, ActionResponse } from "@/types/carteirinha";
 
-export async function CadastrarCarteirinha(data: CarteirinhaInput): Promise<ActionResponse>{
+export async function CadastrarCarteirinha(data: CarteirinhaData): Promise<ActionResponse>{
     try {
         if (!data.name || !data.rgm || !data.course) {
             return { sucesso: false, erro: 'Todos os campos são obrigatórios' };
