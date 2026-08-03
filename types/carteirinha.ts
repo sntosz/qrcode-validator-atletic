@@ -1,7 +1,8 @@
-export interface CarteirinhaInput{
+export interface CarteirinhaData{
     name: string;
     rgm: string;
     course: string;
+    status: string;
 }
 
 export interface ActionResponse{
