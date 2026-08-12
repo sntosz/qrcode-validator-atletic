@@ -6,7 +6,6 @@ import {
     Heading,
     Html,
     Img,
-    Link,
     Preview,
     Section,
     Text,
@@ -15,31 +14,32 @@ import {
 import type EmailTemplateProps from '../../types/email';
 
 export default function EmailTemplate({
-                                  firstName,
-                                  logoUrl = 'C:\\Users\\bi\\WebstormProjects\\qrcode-validator-atletic\\public\\logoAaaes.png',
-                                  title = 'Engenharia de Software Unigran Capital - Recuperação de senha',
-                                  ctaText = 'Clique Aqui',
-                                  ctaUrl = 'https://validmalware.dev/recuperarSenha',
-                              }: EmailTemplateProps) {
+                                          firstName,
+                                          logoUrl = 'https://zb1yjdextz4sw2sh.public.blob.vercel-storage.com/logoAaaes.png',
+                                          title = 'Engenharia de Software Unigran Capital - Recuperação de senha',
+                                          ctaText = 'Redefinir Minha Senha',
+                                          ctaUrl = 'https://validmalware.dev/recuperarSenha',
+                                      }: EmailTemplateProps) {
     return (
         <Html>
             <Head />
-            <Preview>Bem-vindo(a) à A.A.A.E.S.U.C - Lobo da Engenharia de Software</Preview>
+            <Preview>A.A.A.E.S.U.C — Recuperação de Senha</Preview>
             <Tailwind>
-                <Body className="bg-[#0a0d0b] text-[#e0e0e0] my-auto mx-auto font-sans">
-                    <Container className="border border-solid border-[#1f2a23] rounded-xl my-[40px] mx-auto p-[20px] max-w-[500px] bg-[#121614] shadow-2xl">
+                <Body className="bg-[#e9ebed] text-[#1e293b] my-auto mx-auto font-sans p-[20px]">
+                    <Container className="my-[40px] mx-auto max-w-[500px]">
 
-                        <Section className="text-center mt-[20px]">
+                        {/* Header com Logo e Nome */}
+                        <Section className="text-center mb-[24px]">
                             {logoUrl && (
                                 <Img
                                     src={logoUrl}
-                                    width="110"
-                                    height="110"
+                                    width="80"
+                                    height="80"
                                     alt="A.A.A.E.S.U.C Logo"
-                                    className="rounded-full mx-auto border-2 border-solid border-[#22c55e] object-cover"
+                                    className="rounded-full mx-auto shadow-md object-cover"
                                 />
                             )}
-                            <Heading className="text-white text-[20px] font-extrabold tracking-wider uppercase mt-[16px] mb-0">
+                            <Heading className="text-[#0f172a] text-[20px] font-extrabold tracking-wider uppercase mt-[16px] mb-0">
                                 A.A.A.E.S.U.C
                             </Heading>
                             <Text className="text-[#16a34a] text-[11px] font-bold tracking-widest uppercase mt-[4px] mb-0">
@@ -47,50 +47,60 @@ export default function EmailTemplate({
                             </Text>
                         </Section>
 
-                        <Section className="my-[23px] px-[10px]">
-                            <Heading as="h2" className="text-[#4ade80] text-[20px] font-bold mb-[12px]">
+                        {/* Cartão de Conteúdo Principal (Estilo Riot Games) */}
+                        <Section className="bg-white rounded-2xl p-[32px] shadow-xl border border-solid border-[#e2e8f0] text-center">
+                            <Heading as="h2" className="text-[#0f172a] text-[22px] font-bold mb-[16px] mt-0">
                                 Fala, {firstName}! 🐺
                             </Heading>
 
-                            <Text className="text-[#cccccc] text-[14px] leading-[24px] mb-[16px]">
+                            <Text className="text-[#334155] text-[15px] font-medium leading-[22px] mb-[12px]">
                                 {title}
                             </Text>
 
-                            <Text className="text-[#a1a1aa] text-[13px]">
-                                Uma solicitação de recuperação de senha para este e-mail foi efetuada no validMalware.dev.
-                            </Text>
-                            <Text className="text-[#a1a1aa] text-[13px]">
-                                Se não foi você que fez esta solicitação, favor desconsiderar este e-mail.
-                            </Text>
-                            <Text className="text-[#a1a1aa] text-[13px]">
-                                Para continuar a recuperação de senha acesse o link abaixo:
+                            <Text className="text-[#64748b] text-[13px] leading-[20px] mb-[8px]">
+                                Uma solicitação de recuperação de senha para este e-mail foi efetuada no <strong className="text-[#0f172a]">validMalware.dev</strong>.
                             </Text>
 
+                            <Text className="text-[#64748b] text-[13px] leading-[20px] mb-[24px]">
+                                Se você não fez esta solicitação, favor desconsiderar este e-mail. Para continuar a redefinição, acesse o botão abaixo:
+                            </Text>
+
+                            {/* Botão sem crash do Tailwind */}
                             {ctaUrl && (
                                 <Section className="text-center my-[28px]">
-                                    <Link
+                                    <a
                                         href={ctaUrl}
-                                        className="bg-[#16a34a] text-white px-[24px] py-[12px] rounded-md text-[13px] font-bold no-underline inline-block border border-solid border-[#22c55e] shadow-lg"
+                                        style={{
+                                            backgroundColor: '#16a34a',
+                                            color: '#ffffff',
+                                            fontWeight: 'bold',
+                                            fontSize: '14px',
+                                            padding: '14px 32px',
+                                            borderRadius: '12px',
+                                            textDecoration: 'none',
+                                            display: 'inline-block',
+                                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                                        }}
                                     >
                                         {ctaText}
-                                    </Link>
+                                    </a>
                                 </Section>
                             )}
 
-                            {/* Card de Slogan */}
-                            <Section className="bg-[#0c100d]  p-[12px] rounded-r-md mt-[24px]">
-                                <Text className="font-mono text-[12px] text-[#4ade80] m-0 text-center">
+                            {/* Badge estilo Riot Games no rodapé do cartão */}
+                            <Section className="bg-[#f8fafc] p-[12px] rounded-xl mt-[24px] border border-solid border-[#f1f5f9]">
+                                <Text className="font-mono text-[12px] text-[#16a34a] font-bold m-0 text-center">
                                     &lt;/&gt; Código. Disciplina. Domínio.
                                 </Text>
                             </Section>
                         </Section>
 
-                        {/* Rodapé */}
-                        <Section className="border-t border-solid border-[#1a241d] pt-[16px] mt-[24px] text-center">
-                            <Text className="text-[#666666] text-[11px] m-0 leading-[16px]">
+                        {/* Footer Externo */}
+                        <Section className="pt-[24px] mt-[16px] text-center">
+                            <Text className="text-[#64748b] text-[11px] m-0 leading-[16px]">
                                 Associação Atlética Acadêmica de Engenharia de Software Unigran Capital
                             </Text>
-                            <Text className="text-[#52525b] text-[10px] m-0 mt-[4px]">
+                            <Text className="text-[#94a3b8] text-[10px] m-0 mt-[4px]">
                                 Campo Grande - MS | Todos os direitos reservados.
                             </Text>
                         </Section>
