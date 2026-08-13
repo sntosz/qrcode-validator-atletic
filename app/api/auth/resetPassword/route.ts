@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         const {error: updateError } = await supabase
-            .from('users')
+            .from('usuarios_admin')
             .update({senha_hash: hashedPassword})
             .eq('email', resetRecord.email);
 

@@ -53,7 +53,7 @@ export async function POST( req: Request) {
             return NextResponse.json({error: "Erro ao gerar token de recuperação."}, {status: 500});
         }
 
-        const resetUrl = `https://validmalware.dev/recuperarSenha?token=${token}`;
+        const resetUrl = `https://validmalware.dev/resetPassword?token=${token}`;
 
         await resend.emails.send({
             from: "A.A.A.E.S.U.C <nao-responda@validmalware.dev>",
