@@ -18,7 +18,7 @@ export default function EmailTemplate({
                                           logoUrl = 'https://zb1yjdextz4sw2sh.public.blob.vercel-storage.com/logoAaaes.png',
                                           title = 'Engenharia de Software Unigran Capital - Recuperação de senha',
                                           ctaText = 'Redefinir Minha Senha',
-                                          ctaUrl = 'https://validmalware.dev/recuperarSenha',
+                                          ctaUrl,
                                       }: EmailTemplateProps) {
     return (
         <Html>
