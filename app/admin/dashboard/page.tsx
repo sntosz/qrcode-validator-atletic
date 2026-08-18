@@ -113,7 +113,7 @@ export default function Dashboard() {
             <>
               <div className="mt-8 grid gap-6">
                 {pageData.map((item) => (
-                  <CarteirinhaCard key={`${item.id}-${item.rgm}`} data={item} />
+                  <CarteirinhaCard key={`${item.rgm}`} data={item} />
                 ))}
               </div>
 

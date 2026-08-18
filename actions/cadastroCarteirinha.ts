@@ -1,13 +1,16 @@
 'use server'
 
 import { supabase } from "@/app/utils/supabase";
-import type { CarteirinhaInput, ActionResponse } from "@/types/carteirinha";
+import type { CarteirinhaData, ActionResponse } from "@/types/carteirinha";
 
-export async function CadastrarCarteirinha(data: CarteirinhaInput): Promise<ActionResponse>{
+export async function CadastrarCarteirinha(data: CarteirinhaData): Promise<ActionResponse>{
     try {
         if (!data.name || !data.rgm || !data.course) {
             return { sucesso: false, erro: 'Todos os campos são obrigatórios' };
         }
+
+        const statusValue = data.status === 'inativo' ? 'inativo' : 'ativo';
+
         const {error} = await supabase
         .from('carteirinhas')
         .insert([
@@ -15,7 +18,7 @@ export async function CadastrarCarteirinha(data: CarteirinhaInput): Promise<Acti
                 rgm: data.rgm.trim(),
                 name: data.name.trim(),
                 course: data.course.trim(),
-                status: 'ativo'
+                status: statusValue
             }
         ])
         if (error){

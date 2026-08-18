@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LoginAdmin } from "@/actions/admin"
+import Link from "next/link";
 
 export function LoginForm() {
   const router = useRouter()
@@ -107,6 +108,9 @@ export function LoginForm() {
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
             {loading ? "Entrando..." : "Entrar"}
           </Button>
+          <Link href="/forgotPassword" className="text-sm text-center text-emerald-500 underline">
+            Esqueceu sua senha?
+          </Link>
         </form>
         {error ? (
           <div className="mt-3 text-center text-sm text-red-400">{error}</div>
